@@ -84,4 +84,124 @@ class Maze:
 
         return txt
     
-   
+    def add_wall(self, c1, c2):
+    # Facultatif : on teste si les sommets sont bien dans le labyrinthe
+        assert 0 <= c1[0] < self.height and \
+        0 <= c1[1] < self.width and \
+        0 <= c2[0] < self.height and \
+        0 <= c2[1] < self.width, \
+            f"Erreur lors de l'ajout d'un mur entre {c1} et {c2} : les coordonnées de sont pas compatibles avec les dimensions du labyrinthe"
+    # Ajout du mur
+        if c2 in self.neighbors[c1]:      # Si c2 est dans les voisines de c1
+            self.neighbors[c1].remove(c2) # on le retire
+        if c1 in self.neighbors[c2]:      # Si c3 est dans les voisines de c2
+            self.neighbors[c2].remove(c1) # on le retire
+    
+  
+    def remove_wall(self,c1,c2):
+        '''
+        méthode qui permet de retirer un mur entre deux case. 
+        Prend en paramètre deux coordonnée qui correspond à deux cases.
+        Retourne rien.
+
+        c1 : première case
+        c2 : deuxième case
+        
+        '''
+        assert 0 <= c1[0] < self.height and \
+        0 <= c1[1] < self.width and \
+        0 <= c2[0] < self.height and \
+        0 <= c2[1] < self.width, \
+            f"Erreur lors de l'ajout d'un mur entre {c1} et {c2} : les coordonnées de sont pas compatibles avec les dimensions du labyrinthe"
+        if c2 not in self.neighbors[c1]:      # Si c2 est dans les voisines de c1
+            self.neighbors[c1].add(c2) # on le rajoute
+        if c1 not in self.neighbors[c2]:      # Si c3 est dans les voisines de c2
+            self.neighbors[c2].add(c1) # on le rajoute
+
+    
+    def get_walls(self):
+        '''
+        méthode qui permet de lister les coordonnées de tout les murs du labyrinthe.
+        retourne une liste de liste.
+        '''
+        lst=[]
+        GVoisin = self.get_cells()
+        
+        for key in GVoisin.keys():
+            for k in GVoisin[key]:
+                l = []
+                if k not in self.neighbors[key]:
+                    l.append(key)
+                    l.append(k)
+                    if l[::-1] not in lst:
+                        lst.append(l)
+        return lst
+    
+
+
+    def get_cells(self):
+        '''
+        méthode qui sert à lister toute les cases du labyrinthe.
+        retourne un dictionnaire.
+        '''
+        GVoisin = {}
+        for i in range(self.height):
+                for j in range(self.width):
+                    ensemble = set()
+                    if i-1 >=0:
+                        ensemble.add((i-1,j))
+                    if i+1 < self.height:
+                        ensemble.add((i+1,j))
+                    if j-1 >=0:
+                        ensemble.add((i,j-1))
+                    if j+1 < self.width:
+                        ensemble.add((i,j+1))
+                    GVoisin[i,j]= ensemble
+        return GVoisin
+
+    def fill(self):
+        '''
+        méthode qui permet d'ajouter tout les murs posible du labyrinthe.
+        retourne rien
+        '''
+        for i in range(self.height):
+            for j in range(self.width):
+                self.neighbors[i,j] = set()
+        return None
+
+
+    def empty(self):
+        '''
+        méthode qui permet d'enlever tout les murs possible du labyrinthe.
+        retourne rien
+        '''
+        GVoisin = self.get_cells()
+        for i in range(self.height):
+            for j in range(self.width): 
+                self.neighbors[i,j]= GVoisin[i,j]
+                    
+        return None
+
+    def get_contiguous_cells(self, c):
+        '''
+        méthode qui permet de lister les cases voisines d'une coordonné pris en paramètre.
+        retourne une liste
+        '''
+        GVoisin = self.get_cells()
+        lst = []
+        for i in GVoisin[c]:
+            lst.append(i)
+        return lst
+
+    def get_reachable_cells(self,c):
+        '''
+        méthode qui permet de lister les cases accessibles d'une coordonné pris en paramètre.
+        retourne une liste
+        '''
+        lst = []
+        for i in self.neighbors[c]:
+            lst.append(i)
+        return lst
+
+    
+    
