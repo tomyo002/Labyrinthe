@@ -1,6 +1,6 @@
 from Maze import Maze
 
-laby = Maze(4, 4, empty=True)
+#laby = Maze(4, 4, empty=True)
 #print(laby)
 
 #laby.add_wall((0,0),(0,1))
@@ -21,5 +21,7 @@ laby = Maze(4, 4, empty=True)
 #print(laby.get_contiguous_cells((3,3)))
 
 
-print(laby.get_reachable_cells((0,1)))
+#print(laby.get_reachable_cells((0,1)))
 
+laby = Maze.gen_btree(4,4)
+print(laby)

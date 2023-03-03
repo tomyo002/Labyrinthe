@@ -204,4 +204,24 @@ class Maze:
         return lst
 
     
-    
+    @classmethod
+    def gen_btree(cls,h, w):
+        '''
+        méthode de classe qui permet de génerer un labyrinthe sous forme d'arbre binaire.
+        retourne un objet de la classe 
+        '''
+        mazeb = cls(h,w, False)
+        for i in range(h):
+            for j in range(w):
+                val = randint(1,2)
+                if val == 1:
+                    if (i+1,j) in cls.get_contiguous_cells(mazeb,(i,j)):
+                        cls.remove_wall(mazeb,(i,j),(i+1,j))
+                    elif (i,j+1) in cls.get_contiguous_cells(mazeb,(i,j)):
+                        cls.remove_wall(mazeb,(i,j),(i,j+1))
+                elif val == 2:
+                    if (i,j+1) in cls.get_contiguous_cells(mazeb,(i,j)):
+                        cls.remove_wall(mazeb,(i,j),(i,j+1))
+                    elif (i+1,j) in cls.get_contiguous_cells(mazeb,(i,j)):
+                        cls.remove_wall(mazeb,(i,j),(i+1,j))
+        return mazeb
