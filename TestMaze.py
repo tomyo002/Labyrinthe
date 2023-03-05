@@ -26,5 +26,5 @@ from Maze import Maze
 #laby = Maze.gen_btree(4,4)
 #print(laby)
 
-laby = Maze.gen_sidewinder(4, 4)
+laby = Maze.gen_sidewinder(10, 10)
 print(laby)
