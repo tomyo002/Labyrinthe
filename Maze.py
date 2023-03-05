@@ -225,3 +225,26 @@ class Maze:
                     elif (i+1,j) in cls.get_contiguous_cells(mazeb,(i,j)):
                         cls.remove_wall(mazeb,(i,j),(i+1,j))
         return mazeb
+    
+    @classmethod
+    def gen_sidewinder(cls,h, w):
+        mazeS = cls(h,w,False)
+
+        for i in range(h-1):
+            seq = []
+            for j in range(w-1):
+                seq.append((i,j))
+                val = randint(1,2)
+                if val == 1:
+                    cls.remove_wall(mazeS,(i,j),(i,j+1))
+                elif val==2:
+                    coordIndex = randrange(len(seq))
+                    cls.remove_wall(mazeS,seq[coordIndex],(seq[coordIndex][0]+1,seq[coordIndex][1]))
+                    seq = []
+            seq.append((i,w-1))
+            coordIndex = randrange(len(seq))
+            cls.remove_wall(mazeS,seq[coordIndex],(seq[coordIndex][0]+1,seq[coordIndex][1]))
+
+        for k in range(w-1):
+            cls.remove_wall(mazeS,(h-1,k),(h-1,k+1))
+        return mazeS

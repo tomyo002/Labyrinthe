@@ -23,5 +23,8 @@ from Maze import Maze
 
 #print(laby.get_reachable_cells((0,1)))
 
-laby = Maze.gen_btree(4,4)
+#laby = Maze.gen_btree(4,4)
+#print(laby)
+
+laby = Maze.gen_sidewinder(4, 4)
 print(laby)
