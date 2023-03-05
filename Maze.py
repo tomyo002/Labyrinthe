@@ -228,6 +228,10 @@ class Maze:
     
     @classmethod
     def gen_sidewinder(cls,h, w):
+        '''
+        méthode de classe qui permet de générer un labyrinthe
+        en utilisant l'algorithme de génération sidewinder.
+        '''
         mazeS = cls(h,w,False)
 
         for i in range(h-1):
@@ -248,3 +252,31 @@ class Maze:
         for k in range(w-1):
             cls.remove_wall(mazeS,(h-1,k),(h-1,k+1))
         return mazeS
+    
+    @classmethod
+    def gen_fusion(cls,h,w):
+        '''
+        méthode de classe qui permet de construire un labyrinthe
+        en utilisant l'algorithme de fusion
+        '''
+        dictLabel={}
+        val=1
+
+        mazeF = cls(h,w,False)
+        for i in range(h):
+            for j in range(w):
+                dictLabel[i,j]=val
+                val+=1
+        listPossibilite = cls.get_walls(mazeF)
+        shuffle(listPossibilite)
+        
+        for possible in listPossibilite:
+            if dictLabel[possible[0]] != dictLabel[possible[1]]:
+                cls.remove_wall(mazeF,possible[0],possible[1])
+                valuecoor = dictLabel[possible[1]]
+                for cle in dictLabel.keys():
+
+                    if dictLabel[cle] == valuecoor:
+                        dictLabel[cle] = dictLabel[possible[0]]
+        
+        return mazeF
