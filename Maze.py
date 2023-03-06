@@ -280,3 +280,41 @@ class Maze:
                         dictLabel[cle] = dictLabel[possible[0]]
         
         return mazeF
+    
+
+    @classmethod
+    def gen_exploration(cls,h,w):
+        '''
+        méthode de classe qui permet de générer un labyrinthe
+        en utilisant l'algorithme de génération par exploration
+        '''
+        mazeE=cls(h,w,False)
+        x = randint(0,h-1)
+        y = randint(0,w-1)
+        visibilite = {}
+        pile = []
+        for i in range(h):
+            for j in range(w):
+                visibilite[i,j] = False
+        visibilite[x,y] = True
+        pile.append((x,y))
+
+        while len(pile) !=0:
+            cell = pile[0]
+            del(pile[0])
+            visite = True
+            cell_contigue =[]
+            for k in cls.get_contiguous_cells(mazeE,cell):
+                if not visibilite[k]:
+                    visite = False
+                    cell_contigue.append(k)
+            if not visite:
+                pile.insert(0,cell)
+                c = choice(cell_contigue)
+                cls.remove_wall(mazeE,cell,c)
+                visibilite[c] = True
+                pile.insert(0,c)
+        
+        return mazeE
+
+

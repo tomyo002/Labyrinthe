@@ -29,5 +29,8 @@ from Maze import Maze
 #laby = Maze.gen_sidewinder(10, 10)
 #print(laby)
 
-laby = Maze.gen_fusion(15,15)
+#laby = Maze.gen_fusion(15,15)
+#print(laby)
+
+laby = Maze.gen_exploration(15,15)
 print(laby)
