@@ -316,5 +316,53 @@ class Maze:
                 pile.insert(0,c)
         
         return mazeE
+    
+
+    @classmethod
+    def gen_wilson(cls,h,w):
+        '''
+        méthode de classe qui permet de générer un labyrinthe
+        en utilisant l'algorithme de wilson
+        '''
+        mazeW=cls(h,w,False)
+        x = randint(0,h-1)
+        y = randint(0,w-1)
+        marquage = {}
+        for i in range(h):
+            for j in range(w):
+                marquage[i,j] = False
+        marquage[x,y] = True
+
+
+        while False in marquage.values() :
+            x = randint(0,h-1)
+            y = randint(0,w-1)
+            listeM = []
+            if not marquage[x,y]:
+                valM = (x,y)
+                while not marquage[valM]:
+                    listeM.append(valM)
+                    valM = choice(cls.get_contiguous_cells(mazeW,valM))
+                    if valM in listeM:
+                        suppr = True
+                        listeM = listeM[::-1]
+                        while suppr:
+                            if listeM[0] != valM:
+                                del(listeM[0])
+                            else:
+                                suppr = False
+                        listeM= listeM[::-1]
+                listeM.append(valM)
+
+            for l in range(len(listeM)):
+                if l+1 != len(listeM):
+                    cls.remove_wall(mazeW,listeM[l],listeM[l+1])
+ 
+                marquage[listeM[l]] = True
+
+        return mazeW
+            
+                
+
 
 
