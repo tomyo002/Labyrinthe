@@ -96,7 +96,12 @@ while True:
     if nblevel >=3:
         valSwitch =randint(1,2)
         if valSwitch ==1:
-            nbSwitch = randint(3,5)
+            if nblevel <10:
+                nbSwitch = randint(1,2)
+            elif nblevel <= 15:
+                nbSwitch = randint(3,5)
+            else:
+                nbSwitch = randint(5,7)
             for i in range(nbSwitch):
                 coorMS = (randint(0,x-1),randint(0,y-1))
                 while coorMS == (x-1,y-1):
