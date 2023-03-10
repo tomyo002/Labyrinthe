@@ -208,6 +208,8 @@ while True:
                     if not isouvert:
                         screen.blit(serrure,((x-1)*50+15,(y-1)*50+15))
                     screen.blit(text ,(660,60))
+                    for i in listeMs:
+                        screen.blit(malusSwitch,(i[1]*50+15,i[0]*50+15))
                     pygame.display.update()
                     
                 if(coorPerso) == (x-1,y-1) and isouvert:
