@@ -36,5 +36,5 @@ from Maze import Maze
 #print(laby)
 
 
-laby = Maze.gen_wilson(12, 12)
+laby = Maze.gen_wilson(10,10)
 print(laby)

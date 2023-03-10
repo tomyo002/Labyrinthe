@@ -340,24 +340,23 @@ class Maze:
             listeM = []
             if not marquage[x,y]:
                 valM = (x,y)
+                listeM.append(valM)
                 while not marquage[valM]:
-                    listeM.append(valM)
+                    
                     valM = choice(cls.get_contiguous_cells(mazeW,valM))
                     if valM in listeM:
-                        suppr = True
-                        listeM = listeM[::-1]
-                        while suppr:
-                            if listeM[0] != valM:
-                                del(listeM[0])
-                            else:
-                                suppr = False
-                        listeM= listeM[::-1]
-                listeM.append(valM)
 
-            for l in range(len(listeM)):
-                if l+1 != len(listeM):
-                    cls.remove_wall(mazeW,listeM[l],listeM[l+1])
- 
+                        listeM = listeM[::-1]
+                        while listeM[0]!= valM:
+                            del(listeM[0])
+                        del(listeM[0]) 
+                        listeM= listeM[::-1]
+
+                    listeM.append(valM)
+
+            for l in range(len(listeM)-1):
+    
+                cls.remove_wall(mazeW,listeM[l],listeM[l+1])
                 marquage[listeM[l]] = True
 
         return mazeW
