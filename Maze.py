@@ -360,8 +360,85 @@ class Maze:
                 marquage[listeM[l]] = True
 
         return mazeW
-            
-                
+
+    def overlay(self, content=None):
+        """
+        Rendu en mode texte, sur la sortie standard, \
+        d'un labyrinthe avec du contenu dans les cellules
+        Argument:
+            content (dict) : dictionnaire tq content[cell] contient le caractère à afficher au milieu de la cellule
+        Retour:
+            string
+        """
+        if content is None:
+            content = {(i, j): ' ' for i in range(self.height) for j in range(self.width)}
+        else:
+            # Python >=3.9
+            # content = content | {(i, j): ' ' for i in range(
+            #    self.height) for j in range(self.width) if (i,j) not in content}
+            # Python <3.9
+            new_content = {(i, j): ' ' for i in range(self.height) for j in range(self.width) if (i, j) not in content}
+            content = {**content, **new_content}
+        txt = r""
+        # Première ligne
+        txt += "┏"
+        for j in range(self.width - 1):
+            txt += "━━━┳"
+        txt += "━━━┓\n"
+        txt += "┃"
+        for j in range(self.width - 1):
+            txt += " " + content[(0, j)] + " ┃" if (0, j + 1) not in self.neighbors[(0, j)] else " " + content[
+                (0, j)] + "  "
+        txt += " " + content[(0, self.width - 1)] + " ┃\n"
+        # Lignes normales
+        for i in range(self.height - 1):
+            txt += "┣"
+            for j in range(self.width - 1):
+                txt += "━━━╋" if (i + 1, j) not in self.neighbors[(i, j)] else "   ╋"
+            txt += "━━━┫\n" if (i + 1, self.width - 1) not in self.neighbors[(i, self.width - 1)] else "   ┫\n"
+            txt += "┃"
+            for j in range(self.width):
+                txt += " " + content[(i + 1, j)] + " ┃" if (i + 1, j + 1) not in self.neighbors[(i + 1, j)] else " " + \
+                                                                                                                 content[
+                                                                                                                     (
+                                                                                                                     i + 1,
+                                                                                                                     j)] + "  "
+            txt += "\n"
+        # Bas du tableau
+        txt += "┗"
+        for i in range(self.width - 1):
+            txt += "━━━┻"
+        txt += "━━━┛\n"
+        return txt
+
+    def solve_dfs(self,start,stop):
+        pile = [start]
+        predecesseur = {}
+        predecesseur[start]=start
+        marquage = {}
+        for i in range(self.height ):
+            for j in range(self.width ):
+                marquage[(i, j)] = False
+        marquage[start]=True
+        boucle = True
+        while False in marquage.values() and boucle:
+            c = pile.pop(0)
+            if c == stop:
+                boucle = False
+            else:
+                for i in self.get_reachable_cells(c):
+                    if not marquage[i]:
+                        marquage[i]= True
+                        pile.insert(0,i)
+                        predecesseur[i]=c
+        c = stop
+        res = []
+        while c != start:
+            res.append(c)
+            c = predecesseur[c]
+
+        return res
+
 
 
 
