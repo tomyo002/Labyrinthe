@@ -55,13 +55,15 @@ malusSwitch= pygame.transform.scale(pygame.image.load("imgPygame/malusswitch.png
 cle = pygame.transform.scale(pygame.image.load("imgPygame/cle.png"),(30,30))
 serrure = pygame.transform.scale(pygame.image.load("imgPygame/serrure.png"),(40,40))
 succes = pygame.transform.scale(pygame.image.load("imgPygame/sucees50l.png"),(300,200))
-
+succescle = pygame.transform.scale(pygame.image.load("imgPygame/suceescle.png"),(300,200))
+succestourne = pygame.transform.scale(pygame.image.load("imgPygame/suceestourne.png"),(300,200))
 
 level = True
 nblevel=1
 pygame.display.set_caption('infini_labyrinthe')
-
-
+compteurramcle= 0
+montrecleSucces = True
+montretneSucces = True
 
 while True:
     for event in pygame.event.get():
@@ -86,7 +88,23 @@ while True:
     isMs = False
     iscle = False
     listeMs =[]
-    montre = True
+
+    if nblevel <=50:
+        montre = True
+    else:
+        montre = False
+
+    montrecle = False
+    aff = False
+    if montrecleSucces:
+        montrecle = True
+
+    compteurtne =-1
+    montretne = False
+    if montretneSucces:
+        montretne = True
+        compteurtne = 0
+
     smallfont = pygame.font.SysFont('nom',40)
     text=smallfont.render(str(nblevel), True , pygame.Color('white'))
     screen.blit(text ,(660,60))
@@ -150,8 +168,9 @@ while True:
                         coorPerso = (coorPerso[0]-1, coorPerso[1])
                         screen.blit(perso,pos_perso)
                         screen.blit(door,((x-1)*50+15,(y-1)*50+15))
-                        screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
-                        screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
+                        if coor_tp1 != (0,0):
+                            screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
+                            screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
                         if not isouvert:
                             screen.blit(serrure,((x-1)*50+15,(y-1)*50+15))
                         pygame.display.update()
@@ -163,8 +182,9 @@ while True:
                         coorPerso = (coorPerso[0]+1, coorPerso[1])
                         screen.blit(perso,pos_perso)
                         screen.blit(door,((x-1)*50+15,(y-1)*50+15))
-                        screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
-                        screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
+                        if coor_tp1 != (0,0):
+                            screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
+                            screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
                         if not isouvert:
                             screen.blit(serrure,((x-1)*50+15,(y-1)*50+15))
                         pygame.display.update()
@@ -176,8 +196,9 @@ while True:
                         coorPerso = (coorPerso[0], coorPerso[1]-1)
                         screen.blit(perso,pos_perso)
                         screen.blit(door,((x-1)*50+15,(y-1)*50+15))
-                        screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
-                        screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
+                        if coor_tp1 != (0,0):
+                            screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
+                            screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
                         if not isouvert:
                             screen.blit(serrure,((x-1)*50+15,(y-1)*50+15))
                         pygame.display.update()
@@ -189,19 +210,22 @@ while True:
                         coorPerso = (coorPerso[0], coorPerso[1]+1)
                         screen.blit(perso,pos_perso)
                         screen.blit(door,((x-1)*50+15,(y-1)*50+15))
-                        screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
-                        screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
+                        if coor_tp1 != (0,0):
+                            screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
+                            screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
                         if not isouvert:
                             screen.blit(serrure,((x-1)*50+15,(y-1)*50+15))
                         pygame.display.update()
 
             
-                if event.key == pygame.K_TAB:
+                if event.key == pygame.K_TAB and aff :
+                    aff = False
                     constuct_laby(screen,laby,x,y)
                     screen.blit(perso,pos_perso)
                     screen.blit(door,((x-1)*50+15,(y-1)*50+15))
-                    screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
-                    screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
+                    if coor_tp1 != (0,0):
+                            screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
+                            screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
                     screen.blit(levelName,(650,10))
                     if iscle:
                         screen.blit(cle,(coorcle[1]*50+20,coorcle[0]*50+25))
@@ -239,6 +263,7 @@ while True:
 
                 if (coorPerso) in listeMs and isMs:
                     v = randint(1,3)
+                    compteurtne +=1
                     if v == 1:
                         laby=Maze.gen_exploration(x,y)
                     elif v == 2:
@@ -248,8 +273,9 @@ while True:
                     constuct_laby(screen,laby,x,y)
                     screen.blit(perso,pos_perso)
                     screen.blit(door,((x-1)*50+15,(y-1)*50+15))
-                    screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
-                    screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
+                    if coor_tp1 != (0,0):
+                            screen.blit(pierreTp,(coor_tp1[1]*50+15,coor_tp1[0]*50+15))   
+                            screen.blit(pierreTp,(coor_tp2[1]*50+15,coor_tp2[0]*50+15))
                     screen.blit(levelName,(650,10))
                     if iscle:
                         screen.blit(cle,(coorcle[1]*50+20,coorcle[0]*50+25))
@@ -268,16 +294,29 @@ while True:
                     isouvert = True
                     screen.blit(door,((x-1)*50+15,(y-1)*50+15))
                     iscle = False
+                    compteurramcle +=1
                     pygame.display.update()
 
                 if nblevel ==50 and montre:
                     screen.blit(succes,(200,540))
                     montre = False
+                    aff =True
+                    pygame.display.update()
+
+                
+                if compteurramcle == 10 and montrecle:
+                    aff = True
+                    screen.blit(succescle,(200,540))
+                    montrecleSucces = False
+                    montrecle = False
                     pygame.display.update()
                 
-                
-
-
+                if compteurtne == 5 and montretne:
+                    aff = True
+                    screen.blit(succestourne,(200,540))
+                    montretneSucces = False
+                    montretne = False
+                    pygame.display.update()
     
     level = True
     if x >= 7:
