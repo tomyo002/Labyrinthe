@@ -39,8 +39,14 @@ from Maze import Maze
 #laby = Maze.gen_wilson(10,10)
 #print(laby)
 
-laby = Maze.gen_fusion(15, 15)
+"""laby = Maze.gen_fusion(15, 15)
 solution = laby.solve_dfs((0, 0), (14, 14))
+str_solution = {c:'*' for c in solution}
+str_solution[( 0,  0)] = 'D'
+str_solution[(14, 14)] = 'A'
+print(laby.overlay(str_solution))"""
+laby = Maze.gen_exploration(15, 15)
+solution = laby.solve_rhr((0, 0), (14, 14))
 str_solution = {c:'*' for c in solution}
 str_solution[( 0,  0)] = 'D'
 str_solution[(14, 14)] = 'A'

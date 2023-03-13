@@ -439,6 +439,68 @@ class Maze:
 
         return res
 
+    def solve_bfs(start, stop):
+        pile = [start]
+        predecesseur = {}
+        predecesseur[start] = start
+        marquage = {}
+        for i in range(self.height):
+            for j in range(self.width):
+                marquage[(i, j)] = False
+        marquage[start] = True
+        boucle = True
+        while False in marquage.values() and boucle:
+            c = pile.pop(0)
+            if c == stop:
+                boucle = False
+            else:
+                for i in self.get_reachable_cells(c):
+                    if not marquage[i]:
+                        marquage[i] = True
+                        pile.append(i)
+                        predecesseur[i] = c
+        c = stop
+        res = []
+        while c != start:
+            res.append(c)
+            c = predecesseur[c]
 
+        return res
 
+    def solve_rhr(self,start, stop):
 
+        predecesseur = {}
+        predecesseur[start] = start
+        marquage = {}
+
+        for i in range(self.height):
+            for j in range(self.width):
+                marquage[(i, j)] = False
+
+        boucle = True
+        c = start
+        while boucle and False in marquage.values():
+            marquage[c] = True
+            if c == stop:
+                boucle = False
+            else:
+                change = False
+                for i in self.get_reachable_cells(c):
+                    if not marquage[i]:
+                        if i not in predecesseur.keys():
+                            predecesseur[i] = c
+                        c = i
+                        change = True
+
+                if change == False:
+                    tmp = c
+                    c = predecesseur[c]
+                    del predecesseur[tmp]
+        c = stop
+        res = []
+        while c != start:
+
+            res.append(c)
+            c = predecesseur[c]
+
+        return res
