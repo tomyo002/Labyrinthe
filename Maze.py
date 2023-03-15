@@ -400,6 +400,12 @@ class Maze:
         return txt
 
     def solve_dfs(self, start, stop):
+        """
+         cette methode permet de resoudre un labyrinthe selon un algorithme de parcours en longueur
+        :param start: cellule de depart du labyrinthe
+        :param stop: cellule d'arrivée du labyrinthe
+        :return: liste des cellules parcourus pour arriver au chemin le plus court
+        """
         pile = [start]
         predecesseur = {}
         predecesseur[start] = start
@@ -427,7 +433,13 @@ class Maze:
 
         return res
 
-    def solve_bfs(start, stop):
+    def solve_bfs(self,start, stop):
+        """
+             cette methode permet de resoudre un labyrinthe selon un algorithme de parcours en largeur
+        :param start: cellule de depart du labyrinthe
+        :param stop: cellule d'arrivée du labyrinthe
+        :return: liste des cellules parcouru pour atteindre le chemin le plus court
+        """
         pile = [start]
         predecesseur = {}
         predecesseur[start] = start
@@ -456,7 +468,12 @@ class Maze:
         return res
 
     def solve_rhr(self, start, stop):
-
+        """
+         cette methode permet de resoudre un labyrinthe selon l'algorithme de la main droite
+        :param start: cellule de depart du labyrinthe
+        :param stop: cellule d'arrivée du labyrinthe
+        :return: liste des cellules parcourus pour atteindre le chemin le plus court
+        """
         predecesseur = {}
         predecesseur[start] = start
         marquage = {(i, j): False for i in range(self.height) for j in range(self.width)}
@@ -505,4 +522,21 @@ class Maze:
         chemin.insert(0, start)
         return chemin
 
+    def distance_geo(self,c1: tuple,c2 : tuple):
+        """
+           cette methode renvoie la distance entre deux cellules passée en parametres, et ce , en prenant en compte la présence d'eventuels murs.
+        :param c1: premiere cellule à comparer
+        :param c2:deuxieme cellule à comparer
+        :return: distance entre les 2 cellules
+        """
+        return len(self.solve_rhr(c1,c2))-1
+
+    def distance_man(self,c1:tuple, c2:tuple):
+        """
+         cette methode renvoie la distance entre deux cellules passée en parametres, et ce , sans prendre en compte la présence d'eventuels murs.
+        :param c1:  premiere cellule à comparer
+        :param c2: deuxieme cellule à comparer
+        :return:  distance entre les 2 cellules
+        """
+        return abs(c1[0]-c2[0])+abs(c1[1]-c2[1])
 
