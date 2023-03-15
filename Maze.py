@@ -179,6 +179,8 @@ class Maze:
         '''
         méthode qui permet de lister les cases voisines d'une coordonné pris en paramètre.
         retourne une liste
+
+        c : coordonnée
         '''
         GVoisin = self.get_cells()
         lst = []
@@ -190,6 +192,8 @@ class Maze:
         '''
         méthode qui permet de lister les cases accessibles d'une coordonné pris en paramètre.
         retourne une liste
+
+        c : coordonnée
         '''
         lst = []
         for i in self.neighbors[c]:
@@ -199,8 +203,12 @@ class Maze:
     @classmethod
     def gen_btree(cls, h, w):
         '''
-        méthode de classe qui permet de génerer un labyrinthe sous forme d'arbre binaire.
+        méthode de classe qui permet de génerer un labyrinthe sous forme d'arbre binaire 
+        avec la hauteur et la largeur pris en paramètre
         retourne un objet de la classe
+
+        h : hauteur
+        w : largeur
         '''
         mazeb = cls(h, w, False)
         for i in range(h):
@@ -222,7 +230,12 @@ class Maze:
     def gen_sidewinder(cls, h, w):
         '''
         méthode de classe qui permet de générer un labyrinthe
-        en utilisant l'algorithme de génération sidewinder.
+        en utilisant l'algorithme de génération sidewinder 
+        avec la hauteur et la largeur pris en paramètre
+        retourne un objet de la classe
+
+        h : hauteur
+        w : largeur
         '''
         mazeS = cls(h, w, False)
 
@@ -250,6 +263,11 @@ class Maze:
         '''
         méthode de classe qui permet de construire un labyrinthe
         en utilisant l'algorithme de fusion
+        avec la hauteur et la largeur pris en paramètre
+        retourne un objet de la classe
+
+        h : hauteur
+        w : largeur
         '''
         dictLabel = {}
         val = 1
@@ -278,6 +296,11 @@ class Maze:
         '''
         méthode de classe qui permet de générer un labyrinthe
         en utilisant l'algorithme de génération par exploration
+        avec la hauteur et la largeur pris en paramètre
+        retourne un objet de la classe
+
+        h : hauteur
+        w : largeur
         '''
         mazeE = cls(h, w, False)
         x = randint(0, h - 1)
@@ -313,6 +336,11 @@ class Maze:
         '''
         méthode de classe qui permet de générer un labyrinthe
         en utilisant l'algorithme de wilson
+        avec la hauteur et la largeur pris en paramètre
+        retourne un objet de la classe
+
+        h : hauteur
+        w : largeur
         '''
         mazeW = cls(h, w, False)
         x = randint(0, h - 1)
